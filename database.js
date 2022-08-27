@@ -4,7 +4,9 @@ dotenv.config()
 
 console.log(process.env.DB_USER, process.env.DB_PASSWORD)
 
-const pool = new Pool({
+const development = process.env.ENV == "DEVELOPMENT" ? true : false
+
+const config = {
     user: process.env.DB_USER,
     password:process.env.DB_PASSWORD,
     host:process.env.DB_HOST,
@@ -12,7 +14,8 @@ const pool = new Pool({
     database: process.env.DATABASE,
     max: 10,                                                                
     idleTimeoutMillis: 20, 
-    ssl: { rejectUnauthorized: false }
+    // (process.env.ENV == "DEVELOPMENT" ? )
+    // development && {ssl: { rejectUnauthorized: false }}
     // ssl: process.env.ENV == "DEVELOPMENT" ? false : true
     // dialectOptions: {
     //     ssl: {
@@ -20,6 +23,12 @@ const pool = new Pool({
     //       rejectUnauthorized: false // This line will fix new error
     //     }
     //   },
-})
+}
+
+if(!development){
+    config.ssl = { rejectUnauthorized: false }
+}
+
+const pool = new Pool(config)
 
 module.exports.pool = pool;

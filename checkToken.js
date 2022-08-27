@@ -1,10 +1,10 @@
 const jwt = require('jsonwebtoken')
 
 const checkToken = async (req,res,next) => {
-    // console.log(req.headers.authorization)
+    console.log(req.headers.authorization)
     if(req.headers.authorization){
 
-        accessToken = req.headers.authorization.split(' ')[1]
+        accessToken = req.headers.authorization
         // console.log(accessToken)
 
         jwt.verify(accessToken,process.env.JWT_ACCESSTOKEN_SECRET,(err,ADesirealized) => {

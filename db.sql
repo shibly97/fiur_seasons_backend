@@ -44,7 +44,8 @@ CREATE TABLE room (
 CREATE TABLE travel_company (
     travel_company_id bigserial primary key, 
     name varchar(30),
-    address text
+    address text,
+    code text
 );
 
 CREATE TABLE reservation (
@@ -66,3 +67,6 @@ CREATE TABLE reservation (
     customer_mobile varchar(20),
     travel_comapny_id int references travel_company(travel_company_id)
 );
+
+insert into role (role_name) values ('Super-Admin'),('Manager'),('Clerk');
+insert into reservation (room_id, check_in_date, check_out_date,payment_method) values (1, '08-28-2022', '08-29-2022', 'cash');

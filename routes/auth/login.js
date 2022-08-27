@@ -5,6 +5,7 @@ const {pool} = require('../../database')
 // const {OAuth2Client} = require('google-auth-library')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const checkToken = require('../../checkToken')
 // const fetch = require('node-fetch');
 
 router.post('/', async (req,res) => {
@@ -13,7 +14,7 @@ router.post('/', async (req,res) => {
 
     try{
         // 
-        const checkUser = await pool.query('select username, staff_id, role_id from staff where username=$1',[req.body.username])
+        const checkUser = await pool.query('select username, staff_id, role_id, hotel_id, password from staff where username=$1',[req.body.username])
        
         // if a account exist to the username
         if(checkUser.rows[0]){ 
@@ -23,14 +24,15 @@ router.post('/', async (req,res) => {
                 if(password){
                     console.log("Correct password")
 
-                    const accessToken = jwt.sign({ staffId:checkUser.rows[0].staff_id, roleId:req.body.role_id},process.env.JWT_ACCESSTOKEN_SECRET,{expiresIn: 60*60*24*7})
+                    const accessToken = jwt.sign({ staffId:checkUser.rows[0].staff_id, roleId: checkUser.rows[0].role_id},process.env.JWT_ACCESSTOKEN_SECRET,{expiresIn: 60*60*24*7})
 
                     return res.json({ 
                         success: true,
                         message: 'User Authorized',
                         accessToken : accessToken,
                         staffId: checkUser.rows[0].staff_id,
-                        roleId: req.body.role_id
+                        roleId: checkUser.rows[0].role_id,
+                        hotelId: checkUser.rows[0].hotel_id,
                     })
                 }else{
                     console.log("Incorrect password")
