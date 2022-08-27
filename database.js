@@ -12,7 +12,7 @@ const pool = new Pool({
     database: process.env.DATABASE,
     max: 10,                                                                
     idleTimeoutMillis: 20, 
-    ssl: process.env.ENV = "DEVELOPMENT" ? false : true
+    ssl: process.env.ENV == "DEVELOPMENT" ? false : true
     // dialectOptions: {
     //     ssl: {
     //       require: true, // This will help you. But you will see nwe error
