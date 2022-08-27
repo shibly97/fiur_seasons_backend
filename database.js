@@ -12,13 +12,13 @@ const pool = new Pool({
     database: process.env.DATABASE,
     max: 10,                                                                
     idleTimeoutMillis: 20, 
-    // ssl: process.env.ENV == "DEVELOPMENT" ? false : true
-    dialectOptions: {
-        ssl: {
-          require: true, // This will help you. But you will see nwe error
-          rejectUnauthorized: false // This line will fix new error
-        }
-      },
+    ssl: process.env.ENV == "DEVELOPMENT" ? false : true
+    // dialectOptions: {
+    //     ssl: {
+    //       require: true, // This will help you. But you will see nwe error
+    //       rejectUnauthorized: false // This line will fix new error
+    //     }
+    //   },
 })
 
 module.exports.pool = pool;
