@@ -7,6 +7,8 @@ dotenv.config()
 const app = express()
 app.use(express.json())
 
+app.get('/', (req,res) => res.send("Four Seasons Server Up"))
+
 app.use('/api/auth', require('./routes/auth'))
 
 const PORT = process.env.SERVER_PORT || 8080
