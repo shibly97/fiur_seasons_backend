@@ -20,6 +20,8 @@ router.post('/', async (req,res) => {
         // 
         // const checkUser = await pool.query('select username, staff_id, role_id from staff where username=$1',[req.body.username])
         const insert = await pool.query('insert into staff (firstname, lastname, email, username, password, role_id) values ($1,$2,$3,$4,$5,$6)',[body.firstname ,body.lastname ,body.email ,body.username , password ,body.roleId])
+
+    
        
         // if a account exist to the username
         // if(checkUser.rows[0]){ 
@@ -58,6 +60,12 @@ router.post('/', async (req,res) => {
      }
     catch(err){
         console.log(err)
+        if(err.constraint === 'staff_username_key'){
+            return res.json({ 
+                success: false,
+                message:"Username already in use."
+        })
+        }
         return res.json({ 
             success: false,
             error: 'Something went wrong'
