@@ -11,6 +11,12 @@ const checkToken = require('../../checkToken')
 router.post('/', async (req,res) => {
     console.log("User tying to login |")
     console.log(req.body)
+    if(req.body.password || req.body.username){
+        return res.json({ 
+            success: false,
+            message: 'No data on body'
+        })
+    }
 
     try{
         // 
