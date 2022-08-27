@@ -11,7 +11,7 @@ app.get('/', (req,res) => res.send("Four Seasons Server Up"))
 
 app.use('/api/auth', require('./routes/auth'))
 
-const PORT = process.env.SERVER_PORT || 8080
+const PORT = process.env.PORT || 8080
 
 app.listen(PORT, () =>{
     console.log("four_seasons server is running in port " + PORT)
