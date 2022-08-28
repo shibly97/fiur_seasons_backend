@@ -61,11 +61,13 @@ CREATE TABLE reservation (
     club_facility boolean default false, 
     telephone_service boolean default false, 
     payed boolean default false, 
+    amount NUMERIC(5, 2),
     payment_method varchar(20) not null,
     customer_identification varchar(30),
     customer_name text,
     customer_mobile varchar(20),
-    travel_comapny_id int references travel_company(travel_company_id)
+    travel_comapny_id int references travel_company(travel_company_id),
+    status varchar(15)
 );
 
 insert into role (role_name) values ('Super-Admin'),('Manager'),('Clerk');

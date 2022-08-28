@@ -14,7 +14,7 @@ app.get('/', (req,res) => res.send("Four Seasons Server Up"))
 app.use('/api/auth', require('./routes/auth'))
 app.use('/api/hotel', require('./routes/hotelRoutes'))
 app.use('/api/room', require('./routes/roomRoutes'))
-app.use('/api/reservation', require('./routes/roomRoutes'))
+app.use('/api/reservation', require('./routes/reservationRoutes'))
 
 const PORT = process.env.PORT || 8080
 

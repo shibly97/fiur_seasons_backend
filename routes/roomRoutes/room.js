@@ -39,7 +39,7 @@ router.get('/allAvailable/:hotelId', async (req,res) => {
         const getAllRooms = await pool.query('select r.room_id, rc.name from room r join room_category rc ON r.room_category_id = rc.room_category_id WHERE r.hotel_id = $1 AND r.room_category_id = $2',[req.params.hotelId, roomCategory])
 
         
-        const recervedRooms = await pool.query('SELECT re.room_id from reservation re join room r ON r.room_id=re.room_id WHERE re.check_in_date >= $1 AND re.check_out_date <= $2 AND r.hotel_id = $3 AND r.room_category_id= $4',[fromDate, toDate, req.params.hotelId, roomCategory])
+        const recervedRooms = await pool.query('SELECT re.room_id from reservation re join room r ON r.room_id=re.room_id WHERE re.check_in_date >= $1 AND re.check_out_date <= $2 AND re.status != $3 AND r.hotel_id = $4 AND r.room_category_id= $5',[fromDate, toDate, 'canceled', req.params.hotelId, roomCategory])
         
         let recervedRoomsArr = recervedRooms.rows.map(room => +room.room_id)
         let availableRooms = []
